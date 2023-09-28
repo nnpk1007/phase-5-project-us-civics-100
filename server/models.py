@@ -3,6 +3,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 from config import db
 
+
 # Define the association table for the many-to-many relationship
 user_question =  db.Table(
     "user_questions",
@@ -41,7 +42,28 @@ class Question(db.Model, SerializerMixin):
     # many-to-many relationship with User
     users_attempted = db.relationship("User", secondary=user_question, back_populates="questions_attempted")
 
+    # one-to-many relationship with Answer
+    answers = db.relationship("Answer", backref="questions")
+
     def __repr__(self):
         return f"Question \
             id: {self.id} \
-            question_text: {self.question_text} \ "  
+            question_text: {self.question_text} "  
+
+
+# Answer Model
+class Answer(db.model, SerializerMixin):
+    __tablename__ = "answers"
+
+    id = db.Column(db.Integer, primary_key=True)
+    answer_text = db.Column(db.String)
+    correct = db.Column(db.Boolean, default=False)
+
+    question_id = db.Column(db.Integer, db.ForeignKey("question.id"))
+
+    def __repr__(self):
+        return f"Answer \
+            id: {self.id} \
+            answer_text: {self.answer_text} \
+            correct: {self.correct} \
+            question_id: {self.question_id}"
