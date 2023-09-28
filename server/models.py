@@ -30,4 +30,18 @@ class User(db.Model, SerializerMixin):
             email: {self.email} \
             "
 
-    
+
+# Question Model
+class Question(db.Model, SerializerMixin):
+    __tablename__ = "questions"
+
+    id = db.Column(db.Integer, primary_key=True)
+    question_text = db.Column(db.String)
+
+    # many-to-many relationship with User
+    users_attempted = db.relationship("User", secondary=user_question, back_populates="questions_attempted")
+
+    def __repr__(self):
+        return f"Question \
+            id: {self.id} \
+            question_text: {self.question_text} \ "  
