@@ -62,6 +62,21 @@ class Signup(Resource):
 api.add_resource(Signup, "/signup", endpoint="signup")
 
 
+class CheckSession(Resource):
+    
+    def get(self):
+        user_id = session.get("user_id")
+
+        if user_id:
+            user = User.query.filter(User.id == user_id).first()
+            
+            return user.to_dict(), 200
+        else:
+            
+            return {}, 204
+
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
+
 
 @app.route('/')
 def index():
