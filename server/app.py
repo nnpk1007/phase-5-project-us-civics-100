@@ -72,11 +72,36 @@ class CheckSession(Resource):
             
             return user.to_dict(), 200
         else:
-            
+
             return {}, 204
 
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
+
+class Login(Resource):
+     
+     def post(self):
+        data = request.get_json()
+
+        usename = data.get("username")
+        password = data.get("password")
+
+        user = User.query.filter(User.username==usename).first()
+
+        if user and user.authenticate(password):
+            session["user_id"] = user.id
+
+            response = {
+                "id": user.id,
+                "username": user.usename,
+                "email": user.email,
+            }
+
+            return response
+
+        return {"error": "Invalid username or password"}, 401
+
+api.add_resource(Login, '/login', endpoint='login')
 
 @app.route('/')
 def index():
