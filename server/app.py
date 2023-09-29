@@ -85,6 +85,7 @@ class Login(Resource):
         password = data.get("password")
 
         user = User.query.filter(User.username==username).first()
+        print(user)
 
         if user and user.authenticate(password):
             session["user_id"] = user.id
