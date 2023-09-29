@@ -11,12 +11,25 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    // auto-login
+    fetch("/check_session").then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setUser(user)
+          setLoggedIn(true)
+        });
+      }
+    });
+  }, []);
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/learning" element={<Learning />} />
+        <Route path="/learning" element={<Learning isLoggedIn={setLoggedIn}/>} />
         <Route
           path="/login"
           element={<Login onLogin={(user) => setUser(user)} />}

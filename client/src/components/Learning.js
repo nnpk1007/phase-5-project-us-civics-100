@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-function Learning() {
+function Learning({ isLoggedIn }) {
   const [questions, setQuestions] = useState([]);
 
   useEffect(() => {
@@ -17,9 +17,23 @@ function Learning() {
           <NavLink className="nav-link" style={{ color: "purple" }} to="/test">
             QuizTest
           </NavLink>
-          <NavLink className="nav-link" style={{ color: "purple" }} to="/login">
-            Login
-          </NavLink>
+          {isLoggedIn ? (
+            <NavLink
+              className="nav-link"
+              style={{ color: "purple" }}
+              to="/logout"
+            >
+              Logout
+            </NavLink>
+          ) : (
+            <NavLink
+              className="nav-link"
+              style={{ color: "purple" }}
+              to="/login"
+            >
+              Login
+            </NavLink>
+          )}
         </div>
       </nav>
       <div className="container mt-5">
