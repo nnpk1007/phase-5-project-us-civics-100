@@ -21,9 +21,21 @@ class Signup(Resource):
         username = data.get("username")
         email = data.get("email")
         password = data.get("password")
+        password_confirmation = data.get("password_confirmation")
 
-        if not username or not email or not password:
-            return {"error": "Unprocessable Entity"}, 422
+        errors = []
+        
+        # Check if required fields are missing
+        if not username or not email or not password or not password_confirmation:
+            errors.append("All fields are required")
+        
+        # Check if password and password_confirmation match
+        if password != password_confirmation:
+            errors.append("Password confirmation failed")
+
+        if errors:
+            return {"errors": errors}, 422
+
         # Save a new user to databse 
         new_user = User(username="username", email="email")
         new_user.password_hash = password 
@@ -33,15 +45,17 @@ class Signup(Resource):
             db.session.commit()
             
             session["user_id"] = new_user.id
+
             return new_user.to_dict(), 201
             
         except IntegrityError as e:
             errors = []
-
+            
+            # Check if the error is an IntegrityError or DataError            
             if isinstance(e, (IntegrityError)):
                 for error in e.orig.args:
                     if "UNIQUE" in error:
-                        errors.append("User name or email already taken. Please try again")
+                        errors.append("User name or email is already taken. Please try again")
 
             return {'errors': errors}, 422
 
