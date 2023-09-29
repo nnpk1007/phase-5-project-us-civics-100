@@ -361,4 +361,4 @@ if __name__ == '__main__':
         db.session.add_all(quizs_attempt_to_add)
         db.session.commit()
 
-        print("Seeding complete")
+        print("Seeding complete.")
