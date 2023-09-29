@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 
 function Home() {
@@ -8,6 +9,9 @@ function Home() {
             <p className="lead">
                 Prepare for your civics exam and test your knowledge
             </p>
+            <Link to="/learning">
+                <button className="btn btn-primary">Get Started</button>
+            </Link>
         </div>
     )
 }
