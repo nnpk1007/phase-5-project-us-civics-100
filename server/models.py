@@ -35,6 +35,11 @@ class User(db.Model, SerializerMixin):
         password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
         self._password_hash = password_hash.decode('utf-8')
 
+    def authenticate(self, provided_password):
+        return bcrypt.check_password_hash(
+            self._password_hash, provided_password.encode("utf-8")
+        )
+
     def __repr__(self):
         return f"User \
             id : {self.id} \
