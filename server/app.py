@@ -116,6 +116,35 @@ class Logout(Resource):
 
 api.add_resource(Logout, '/logout', endpoint='logout')
 
+
+class Civics100Learning(Resource):
+
+    def get(self):
+        questions = Question.query.all()
+
+        # create an empty list to store question-answer pairs
+        question_answer_list = []
+
+        for question in questions:
+            # Retrieve the answers associated with each question
+            answers = question.answers
+
+            # Create a list to store the answer_texts (only correct answer)
+            answer_texts = [answer.answer_text for answer in answers if answer.correct==1]
+
+            # create a dictionary for the question_answer pair
+            question_answer_pair = {
+                "question_text": question.question_text,
+                "answers": answer_texts
+            }
+
+            question_answer_list.append(question_answer_pair)
+
+        return question_answer_list, 200
+
+api.add_resource(Civics100Learning, "/civics100learning", endpoint="civics100learning")
+
+
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
