@@ -83,25 +83,38 @@ class Login(Resource):
      def post(self):
         data = request.get_json()
 
-        usename = data.get("username")
+        username = data.get("username")
         password = data.get("password")
 
-        user = User.query.filter(User.username==usename).first()
+        user = User.query.filter(User.username==username).first()
 
         if user and user.authenticate(password):
             session["user_id"] = user.id
 
             response = {
                 "id": user.id,
-                "username": user.usename,
+                "username": user.username,
                 "email": user.email,
             }
 
-            return response
+            return response, 200
 
         return {"error": "Invalid username or password"}, 401
 
 api.add_resource(Login, '/login', endpoint='login')
+
+
+class Logout(Resource):
+
+    def delete(self):
+        if session.get["user_id"]:
+            session["user_id"] = None
+
+            return {}, 204
+
+        return {"error": "Unauthorized"}, 401
+
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 @app.route('/')
 def index():
