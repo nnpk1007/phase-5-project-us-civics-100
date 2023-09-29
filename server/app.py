@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 
-# Standard library imports
+import requests
 
-# Remote library imports
 from flask import request, session
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
+from random import sample
 
-# Local imports
 from config import app, db, api
 from models import User, Question, Answer, QuizAttempt
-
 
 
 class Signup(Resource):
@@ -142,7 +140,52 @@ class Civics100Learning(Resource):
 
         return question_answer_list, 200
 
-api.add_resource(Civics100Learning, "/civics100learning", endpoint="civics100learning")
+api.add_resource(Civics100Learning, "/civics100-learning", endpoint="civics100-learning")
+
+#  Generate a list of random questions from the database.
+def generate_random_question(number_of_questions):
+    all_questions = Question.query.all()
+
+    random_questions = sample(all_questions, number_of_questions)
+
+    return random_questions
+
+
+class CivicsTest(Resource):
+
+    def get(self):
+        # check if user is logged in
+        check_session_response = requests.get("http://localhost:5555/check_session")
+
+        if check_session_response.status_code == 200:
+            questions = generate_random_question(10)
+
+            # create an empty list to store question-answer pairs
+            question_answer_list = []
+
+            for question in questions:
+                # Retrieve the answers associated with each question
+                answers = question.answers
+
+                answer_texts = [answer.answer_text for answer in answers]
+
+                # Shuffle the answers to randomize order
+                shuffle(answer_texts)
+
+                question_answer_pair = {
+                    "question_text": question.question_text,
+                    "answers": answer_texts
+                }
+
+                question_answer_list.append(question_answer_pair)
+
+            return question_answer_list, 200
+
+        elif check_session_response.status_code == 204:
+
+            return {"error": "Unauthorized"}, 401
+    
+api.add_resource(CivicsTest, '/civics-test', endpoint='civics-test')
 
 
 @app.route('/')
