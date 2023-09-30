@@ -16,10 +16,10 @@ class Signup(Resource):
     def post(self):
         data = request.get_json()
         
-        username = data.get("username")
-        email = data.get("email")
-        password = data.get("password")
-        password_confirmation = data.get("password_confirmation")
+        username = data["username"]
+        email = data["email"]
+        password = data["password"]
+        password_confirmation = data["passwordConfirmation"]
 
         errors = []
         
@@ -35,7 +35,7 @@ class Signup(Resource):
             return {"errors": errors}, 422
 
         # Save a new user to databse 
-        new_user = User(username="username", email="email")
+        new_user = User(username=username, email=email)
         new_user.password_hash = password 
 
         try:
