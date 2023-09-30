@@ -153,37 +153,30 @@ def generate_random_question(number_of_questions):
 class CivicsTest(Resource):
 
     def get(self):
-        # check if user is logged in
-        check_session_response = requests.get("http://localhost:5555/check_session")
+        
+        questions = generate_random_question(10)
 
-        if check_session_response.status_code == 200:
-            questions = generate_random_question(10)
+        # create an empty list to store question-answer pairs
+        question_answer_list = []
 
-            # create an empty list to store question-answer pairs
-            question_answer_list = []
+        for question in questions:
+            # Retrieve the answers associated with each question
+            answers = question.answers
 
-            for question in questions:
-                # Retrieve the answers associated with each question
-                answers = question.answers
+            answer_texts = [answer.answer_text for answer in answers]
 
-                answer_texts = [answer.answer_text for answer in answers]
+            # Shuffle the answers to randomize order
+            random.shuffle(answer_texts)
 
-                # Shuffle the answers to randomize order
-                random.shuffle(answer_texts)
+            question_answer_pair = {
+                "question_text": question.question_text,
+                "answers": answer_texts
+            }
 
-                question_answer_pair = {
-                    "question_text": question.question_text,
-                    "answers": answer_texts
-                }
+            question_answer_list.append(question_answer_pair)
 
-                question_answer_list.append(question_answer_pair)
+        return question_answer_list, 200
 
-            return question_answer_list, 200
-
-        elif check_session_response.status_code == 204:
-
-            return {"error": "Unauthorized"}, 401
-    
 api.add_resource(CivicsTest, '/civics-test', endpoint='civics-test')
 
 

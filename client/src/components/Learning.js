@@ -9,6 +9,7 @@ function Learning({ isLoggedIn, handleLogout }) {
       .then((res) => res.json())
       .then((data) => setQuestions(data));
   }, []);
+  console.log(questions)
 
   return (
     <>
