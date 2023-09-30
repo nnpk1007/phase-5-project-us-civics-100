@@ -13,6 +13,14 @@ function App() {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  useEffect(() => {
+    fetchUser()
+  }, [])
+
+  const fetchUser = () => {
+    fetch("/")
+  }
+
   const handleLogout = () => {
     fetch("/logout", {
       method: "DELETE",

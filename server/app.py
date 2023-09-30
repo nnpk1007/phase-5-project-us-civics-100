@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import requests
+import requests, random
 
 from flask import request, session, make_response
 from flask_restful import Resource
@@ -60,23 +60,20 @@ class Signup(Resource):
 api.add_resource(Signup, "/signup", endpoint="signup")
 
 
-class CheckSession(Resource):
-    
-    def get(self):
-        user = User.query.filter(User.id == session.get('user_id')).first()
-        if user:
-            # need to fix the response not include password
-            response = {
-                "id": user.id,
-                "username": user.username,
-                "email": user.email,
-            }
+@app.route("/authorized", methods=["GET"])    
+def authorized():
+    user = User.query.filter(User.id == session.get('user_id')).first()
+    if user:
+        response = {
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+        }
 
-            return response
-        else:
-            return {"errors": ["Unauthorized"]}, 401
+        return response
+    else:
+        return {"errors": ["Unauthorized"]}, 401
 
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 @app.route("/login", methods=["POST"])
 def login():
@@ -172,7 +169,7 @@ class CivicsTest(Resource):
                 answer_texts = [answer.answer_text for answer in answers]
 
                 # Shuffle the answers to randomize order
-                shuffle(answer_texts)
+                random.shuffle(answer_texts)
 
                 question_answer_pair = {
                     "question_text": question.question_text,
