@@ -28,8 +28,6 @@ function Login({ onLogin, setIsLoggedIn }) {
           r.json().then((errorData) => {
             // console.log(errorData);
             setErrors([errorData.errors]);
-            console.log("Errors:", errors)
-            console.log(errors.length)
           });
         }
       })

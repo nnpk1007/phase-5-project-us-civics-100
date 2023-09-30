@@ -12,14 +12,27 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function App() {
   const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
-    fetchUser()
-  }, [])
+    fetchUser();
+  }, []);
 
   const fetchUser = () => {
-    fetch("/")
-  }
+    fetch("/authorized").then((r) => {
+      if (r.ok) {
+        console.log("Fetch User", r);
+        r.json().then((userData) => { 
+          setUser(userData)
+          setIsLoggedIn(true)
+        });
+      } else {
+          r.json().then((errorData) => {
+          setErrors([errorData.errors]);
+        });
+      }
+    });
+  };
 
   const handleLogout = () => {
     fetch("/logout", {
@@ -27,9 +40,9 @@ function App() {
     }).then((r) => {
       if (r.status === 204) {
         setIsLoggedIn(false);
-        setUser(null)
+        setUser(null);
       } else {
-        console.error("Logout error:", r.statusText)
+        console.error("Logout error:", r.statusText);
       }
     });
   };
@@ -46,9 +59,20 @@ function App() {
         />
         <Route
           path="/login"
-          element={<Login onLogin={(user) => setUser(user)} setIsLoggedIn={setIsLoggedIn}/>}
+          element={
+            <Login
+              onLogin={(user) => setUser(user)}
+              setIsLoggedIn={setIsLoggedIn}
+              setErrors={setErrors}
+            />
+          }
         />
-        <Route path="/signup" element={<Signup setIsLoggedIn={setIsLoggedIn}/>} />
+        <Route
+          path="/signup"
+          element={
+            <Signup setIsLoggedIn={setIsLoggedIn} />
+          }
+        />
         <Route path="/test" element={<QuizTest />} />
       </Routes>
     </BrowserRouter>
