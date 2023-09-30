@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Signup({ setIsLoggedIn }) {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -31,6 +31,7 @@ function Signup() {
           setEmail("")
           setPassword("")
           setPasswordConfirmation("")
+          setIsLoggedIn(true)
           navigate("/learning");
         })
       } else {
@@ -115,7 +116,7 @@ function Signup() {
                 )}
                 <div className="text-center">
                   <button type="submit" className="btn btn-primary">
-                    Login
+                    Signup
                   </button>
                 </div>
               </form>

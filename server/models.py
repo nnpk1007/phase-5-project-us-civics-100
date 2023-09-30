@@ -18,9 +18,9 @@ class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(25), unique=True, nullable=False)
-    email = db.Column(db.String, unique=True, nullable=False)
-    _password_hash = db.Column(db.String, nullable=False)
+    username = db.Column(db.String(25), unique=True)
+    email = db.Column(db.String, unique=True)
+    _password_hash = db.Column(db.String)
 
     # many-to-many relationship with Question
     questions_attempted = db.relationship("Question", secondary=user_question, back_populates="users_attempted")
@@ -28,6 +28,7 @@ class User(db.Model, SerializerMixin):
     @hybrid_property
     def password_hash(self):
         raise AttributeError("Password hashed may not be viewed.")
+        # return self._password_hash_
 
     @password_hash.setter
     def password_hash(self, password):

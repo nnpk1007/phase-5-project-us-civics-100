@@ -21,9 +21,12 @@ if __name__ == '__main__':
 
         print("Creating users...")
 
-        user1 = User(username="user1", email="user1@example.com", password_hash="user1" + "password")
-        user2 = User(username="user2", email="user2@example.com", password_hash="user2" + "password")
-        user3 = User(username="user3", email="user3@example.com", password_hash="user3" + "password")
+        user1 = User(username="user1", email="user1@example.com")
+        user1.password_hash="user1" + "password"
+        user2 = User(username="user2", email="user2@example.com")
+        user2.password_hash="user2" + "password"
+        user3 = User(username="user3", email="user3@example.com")
+        user3.password_hash="user3" + "password"
 
         db.session.add_all([user1, user2, user3])
         db.session.commit()
