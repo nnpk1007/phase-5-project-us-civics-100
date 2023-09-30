@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-function Login({ onLogin }) {
+function Login({ onLogin, setIsLoggedIn }) {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -21,6 +21,7 @@ function Login({ onLogin }) {
         if (r.ok) {
           r.json().then((user) => {
             onLogin(user);
+            setIsLoggedIn(true)
             navigate("/learning");
           });
         } else {

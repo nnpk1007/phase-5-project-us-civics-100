@@ -2,7 +2,7 @@
 
 import requests
 
-from flask import request, session
+from flask import request, session, make_response
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from random import sample
@@ -63,15 +63,16 @@ api.add_resource(Signup, "/signup", endpoint="signup")
 class CheckSession(Resource):
     
     def get(self):
-        user_id = session.get("user_id")
-
-        if user_id:
-            user = User.query.filter(User.id == user_id).first()
-            
-            return user.to_dict(), 200
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            # need to fix the response not include password
+            response = make_response(
+                user.to_dict(),
+                200,
+            )
+            return response
         else:
-
-            return {}, 204
+            return {"errors": ["Unauthorized"]}, 401
 
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
@@ -106,9 +107,8 @@ api.add_resource(Login, '/login', endpoint='login')
 class Logout(Resource):
 
     def delete(self):
-        if session.get["user_id"]:
+        if session.get("user_id"):
             session["user_id"] = None
-
             return {}, 204
 
         return {"error": "Unauthorized"}, 401

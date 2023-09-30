@@ -11,28 +11,34 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    // auto-login
-    fetch("/check_session").then((r) => {
-      if (r.ok) {
-        r.json().then((user) => {
-          setUser(user)
-          setLoggedIn(true)
-        });
+  const handleLogout = () => {
+    fetch("/logout", {
+      method: "DELETE",
+    }).then((r) => {
+      if (r.status === 204) {
+        setIsLoggedIn(false);
+        setUser(null)
+      } else {
+        console.error("Logout error:", r.statusText)
       }
     });
-  }, []);
+  };
 
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/learning" element={<Learning isLoggedIn={setLoggedIn}/>} />
+        <Route
+          path="/learning"
+          element={
+            <Learning isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+          }
+        />
         <Route
           path="/login"
-          element={<Login onLogin={(user) => setUser(user)} />}
+          element={<Login onLogin={(user) => setUser(user)} setIsLoggedIn={setIsLoggedIn}/>}
         />
         <Route path="/signup" element={<Signup />} />
         <Route path="/test" element={<QuizTest />} />
