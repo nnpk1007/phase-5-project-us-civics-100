@@ -27,18 +27,17 @@ class User(db.Model, SerializerMixin):
 
     @hybrid_property
     def password_hash(self):
-        return self._password_hash
-        raise Exception("Cannot access password hash")
+        raise AttributeError("Password hashed may not be viewed.")
 
     @password_hash.setter
     def password_hash(self, password):
-        password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
-        self._password_hash = password_hash.decode('utf-8')
+        # password_hash = bcrypt.generate_password_hash(password.encode('utf-8'))
+        # self._password_hash = password_hash.decode('utf-8')
+        hashed_pw = bcrypt.generate_password_hash(password).decode("utf-8")
+        self._password_hash = hashed_pw
 
     def authenticate(self, provided_password):
-        return bcrypt.check_password_hash(
-            self._password_hash, provided_password.encode("utf-8")
-        )
+        return bcrypt.check_password_hash(self._password_hash, provided_password)
 
     def __repr__(self):
         return f"User \

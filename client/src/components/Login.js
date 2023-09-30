@@ -21,11 +21,16 @@ function Login({ onLogin, setIsLoggedIn }) {
         if (r.ok) {
           r.json().then((user) => {
             onLogin(user);
-            setIsLoggedIn(true)
+            setIsLoggedIn(true);
             navigate("/learning");
           });
         } else {
-          r.json().then((err) => setErrors(err.errors));
+          r.json().then((errorData) => {
+            // console.log(errorData);
+            setErrors([errorData.errors]);
+            console.log("Errors:", errors)
+            console.log(errors.length)
+          });
         }
       })
       .catch((error) => {

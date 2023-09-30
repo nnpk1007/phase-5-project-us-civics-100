@@ -66,29 +66,30 @@ class CheckSession(Resource):
         user = User.query.filter(User.id == session.get('user_id')).first()
         if user:
             # need to fix the response not include password
-            response = make_response(
-                user.to_dict(),
-                200,
-            )
+            response = {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+            }
+
             return response
         else:
             return {"errors": ["Unauthorized"]}, 401
 
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
 
-class Login(Resource):
-     
-     def post(self):
-        data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
 
-        username = data.get("username")
-        password = data.get("password")
+    user = User.query.filter(User.username==username).first()
+    print(user)
 
-        user = User.query.filter(User.username==username).first()
-        print(user)
-
-        if user and user.authenticate(password):
+    if user:
+        if user.authenticate(password):
             session["user_id"] = user.id
 
             response = {
@@ -98,10 +99,10 @@ class Login(Resource):
             }
 
             return response, 200
-
-        return {"error": "Invalid username or password"}, 401
-
-api.add_resource(Login, '/login', endpoint='login')
+        else:
+            return {"errors": ["Invalid password"]}, 401
+    else:
+        return {"errors": "Invalid username or password"}, 401
 
 
 class Logout(Resource):
