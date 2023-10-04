@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 
 import Home from "./Home";
 import Learning from "./Learning";
@@ -11,6 +11,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -22,12 +23,13 @@ function App() {
     fetch("/authorized").then((r) => {
       if (r.ok) {
         console.log("Fetch User", r);
-        r.json().then((userData) => { 
-          setUser(userData)
-          setIsLoggedIn(true)
+        r.json().then((userData) => {
+          setUser(userData);
+          setUserId(userData.id);
+          setIsLoggedIn(true);
         });
       } else {
-          r.json().then((errorData) => {
+        r.json().then((errorData) => {
           setErrors([errorData.errors]);
         });
       }
@@ -69,11 +71,13 @@ function App() {
         />
         <Route
           path="/signup"
-          element={
-            <Signup setIsLoggedIn={setIsLoggedIn} />
-          }
+          element={<Signup setIsLoggedIn={setIsLoggedIn} />}
         />
-        <Route path="/test" element={<QuizTest />} />
+        {isLoggedIn ? (
+          <Route path="/test" element={<QuizTest />} />
+        ) : (
+          <Route path="/test" element={<Navigate to="/login" />} />
+        )}
       </Routes>
     </BrowserRouter>
   );

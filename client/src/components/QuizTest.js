@@ -34,7 +34,7 @@ function QuizTest() {
     // check to make sure the currenQuestionIndex does not go over the limit
     if (currentQuestionsIndex < quiz.length) {
       setCurrentQuestionIndex(currentQuestionsIndex + 1);
-    }
+    } 
   };
   console.log("Score:", score);
 

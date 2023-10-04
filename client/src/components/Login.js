@@ -12,7 +12,7 @@ function Login({ onLogin, setIsLoggedIn }) {
     e.preventDefault();
     fetch("/login", {
       method: "POST",
-      headers: {
+      headers: { 
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
