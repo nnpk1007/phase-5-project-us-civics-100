@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 
 function QuizTest() {
   const [quiz, setQuiz] = useState([]);
-  
+  const [currentQuestionsIndex, setCurrentQuestionIndex] = useState(0);
+
   useEffect(() => {
     fetch("/civics-test")
       .then((res) => res.json())
@@ -12,63 +13,54 @@ function QuizTest() {
       });
   }, []);
 
-  console.log(quiz)
+  console.log(quiz);
+  
+  const handleNextQuestion = () => {
+    // check to make sure the currenQuestionIndex does not go over the limit
+    if (currentQuestionsIndex < quiz.length -1) {
+      setCurrentQuestionIndex(currentQuestionsIndex + 1)
+    }
+  }
 
   return (
-    // resource to learn how to build a quiz test by Bootstrap
-    // https://medium.com/@reul.ghorm/get-familiar-with-bootstrap-components-build-a-simple-knowledge-quiz-d5908beeb5ba
     <>
       <div className="container-fluid">
         <div className="jumborton">
           <h2 className="text-center mt-5">US Civics Test</h2>
-          {quiz.map((question, index) => (
-            <div className="card border-info">
-              <div key={question.id}>
-                <div className="card-header bg-info text-white">
-                  Question {index + 1}: {question.question_text}
-                </div>
-                {question.answers.map((answer, index) => (
-                  <div className="form-check">
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id={index + 1}
-                    />
-                    <label
-                      className="form-check-label"
-                      htmlFor="flexCheckIndeterminate"
-                    >
-                      {answer}
-                    </label>
-                  </div>
-                ))}
-              </div>
+        {currentQuestionsIndex < quiz.length &&  ( 
+          <div className="card border-info">
+            <div className="card-header bg-info text-white">
+              Question {currentQuestionsIndex + 1}:{" "}
+              {quiz[currentQuestionsIndex].question_text}
             </div>
-          ))}
-        </div>
-      </div>
-      <h3>Result</h3>
-
-      <div class="card">
-        <div class="card-body">
-          <p id="result">No result.</p>
-
-          <div class="progress mb-2">
-            <div
-              class="progress-bar"
-              role="progressbar"
-              aria-valuenow="0"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
+            {quiz[currentQuestionsIndex].answer_options.map(
+              (answer, answerIndex) => (
+                <div className="form-check" key={answerIndex}>
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    id={`q${currentQuestionsIndex}_a${answerIndex}`}
+                    />
+                  <label
+                    className="form-check-label"
+                    htmlFor={`q${currentQuestionsIndex}_a${answerIndex}`}
+                    >
+                    {answer.answer_text}
+                  </label>
+                </div>
+              )
+            )}
           </div>
-
-          <button type="button" class="btn btn-success">
-            Update
+        )}
+          <button
+            type="button"
+            className="btn btn-success mt-3"
+            onClick={handleNextQuestion}
+            >
+              Next
           </button>
         </div>
-      </div>
+        </div>
     </>
   );
 }
