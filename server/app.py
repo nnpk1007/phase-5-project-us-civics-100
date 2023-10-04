@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import requests, random
+import random
 
-from flask import request, session, make_response
+from flask import request, session, jsonify
 from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 from random import sample
@@ -207,6 +207,14 @@ def submit_quiz_attempt():
 
     return quiz_attempt.to_dict(), 201
 
+
+@app.route('/quiz-attempts/<int:user_id>', methods=['GET'])
+def get_quiz_attempts(user_id):
+    quiz_attempts = QuizAttempt.query.filter_by(user_id=user_id).all()
+
+    quiz_attempts_data = [attempt.to_dict() for attempt in quiz_attempts]
+
+    return jsonify(quiz_attempts_data), 200
 
 @app.route('/')
 def index():
