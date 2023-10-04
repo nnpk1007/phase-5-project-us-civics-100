@@ -23,7 +23,7 @@ function Learning({ isLoggedIn, handleLogout }) {
               <NavLink
                 className="nav-link"
                 style={{ color: "purple" }}
-                to="/record"
+                to="/quiz-history"
               >
                 Quiz History
               </NavLink>

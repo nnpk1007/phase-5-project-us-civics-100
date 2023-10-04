@@ -8,6 +8,7 @@ import Signup from "./Signup";
 import QuizTest from "./QuizTest";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import QuizHistory from "./QuizHistory";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -80,6 +81,7 @@ function App() {
         ) : (
           <Route path="/test" element={<Navigate to="/login" />} />
         )}
+        <Route path="/quiz-history" element={<QuizHistory userId={userId}/>}/>
       </Routes>
     </BrowserRouter>
   );
