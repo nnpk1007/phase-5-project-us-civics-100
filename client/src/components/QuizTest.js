@@ -1,29 +1,18 @@
 import { useState, useEffect } from "react";
-import { Button, Form } from "react-bootstrap";
 
 function QuizTest() {
   const [quiz, setQuiz] = useState([]);
-  const [correctAnswers, setCorrectAnswers] = useState({});
-
+  
   useEffect(() => {
     fetch("/civics-test")
       .then((res) => res.json())
       .then((data) => {
         //console.log(data)
         setQuiz(data);
-
-        const correctAnswersMap = {};
-      data.forEach((question) => {
-        correctAnswersMap[question.id] = question.correct_answer;
-      });
-      setCorrectAnswers(correctAnswersMap);
       });
   }, []);
-  console.log(quiz);
-  console.log(correctAnswers)
-  const handleSubmit = () => {
-    // Submit quiz for grading
-  };
+
+  console.log(quiz)
 
   return (
     // resource to learn how to build a quiz test by Bootstrap
@@ -38,16 +27,20 @@ function QuizTest() {
                 <div className="card-header bg-info text-white">
                   Question {index + 1}: {question.question_text}
                 </div>
-                {question.answers.map((answer) => (
+                {question.answers.map((answer, index) => (
                   <div className="form-check">
                     <input
                       className="form-check-input"
-                      type="radio"
-                      name={"q" + question.id}
-                      id={question.id}
-                      value={"v" + question.id}
+                      type="checkbox"
+                      value=""
+                      id={index + 1}
                     />
-                    <label className="form-checl-label">{answer}</label>
+                    <label
+                      className="form-check-label"
+                      htmlFor="flexCheckIndeterminate"
+                    >
+                      {answer}
+                    </label>
                   </div>
                 ))}
               </div>

@@ -155,6 +155,7 @@ class CivicsTest(Resource):
     def get(self):
         
         questions = generate_random_question(10)
+        # print("questions generated:", questions)
 
         # create an empty list to store question-answer pairs
         question_answer_list = []
@@ -163,18 +164,26 @@ class CivicsTest(Resource):
             # Retrieve the answers associated with each question
             answers = question.answers
 
-            answer_texts = [answer.answer_text for answer in answers]
+            # create the answer options list
+            answers_option = [
+                {
+                    "answer_text":answer.answer_text,
+                    "correct": answer.correct
+                }
+                for answer in answers
+            ]
 
-            # Shuffle the answers to randomize order
-            random.shuffle(answer_texts)
+            # shuffle the answers_option in random order
+            random.shuffle(answers_option)
 
-            question_answer_pair = {
+            # create the question object 
+            question_object = {
                 "question_text": question.question_text,
-                "answers": answer_texts
+                "answer_options":answers_option
             }
-
-            question_answer_list.append(question_answer_pair)
-
+                
+            question_answer_list.append(question_object
+                                        )
         return question_answer_list, 200
 
 api.add_resource(CivicsTest, '/civics-test', endpoint='civics-test')
