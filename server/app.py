@@ -188,6 +188,25 @@ class CivicsTest(Resource):
 
 api.add_resource(CivicsTest, '/civics-test', endpoint='civics-test')
 
+@app.route("/submit-quiz-attempt", methods=["POST"])
+def submit_quiz_attempt():
+    data = request.get_json()
+
+    user_id = data.get("user_id")
+    score = data.get("score")
+    questions_attempted = data.get("questions_attempted")
+
+    quiz_attempt = QuizAttempt(
+        user_id=user_id,
+        score=score,
+        questions_attempted=questions_attempted
+    )
+
+    db.session.add(quiz_attempt)
+    db.session.commit()
+
+    return quiz_attempt.to_dict(), 201
+
 
 @app.route('/')
 def index():
