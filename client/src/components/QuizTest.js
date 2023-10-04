@@ -38,7 +38,8 @@ function QuizTest() {
                 <div className="form-check" key={answerIndex}>
                   <input
                     className="form-check-input"
-                    type="checkbox"
+                    type="radio"
+                    name={`q${currentQuestionsIndex}`}
                     id={`q${currentQuestionsIndex}_a${answerIndex}`}
                     />
                   <label
@@ -50,8 +51,6 @@ function QuizTest() {
                 </div>
               )
             )}
-          </div>
-        )}
           <button
             type="button"
             className="btn btn-success mt-3"
@@ -59,6 +58,8 @@ function QuizTest() {
             >
               Next
           </button>
+          </div>
+        )}
         </div>
         </div>
     </>
