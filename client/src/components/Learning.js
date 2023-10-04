@@ -9,7 +9,7 @@ function Learning({ isLoggedIn, handleLogout }) {
       .then((res) => res.json())
       .then((data) => setQuestions(data));
   }, []);
-  console.log(questions)
+  console.log(questions);
 
   return (
     <>
@@ -19,15 +19,24 @@ function Learning({ isLoggedIn, handleLogout }) {
             QuizTest
           </NavLink>
           {isLoggedIn ? (
-            <button
-              className="nav-link"
-              style={{ color: "purple" }}
-              onClick={() => {
-                handleLogout();
-              }}
-            >
-              Logout
-            </button>
+            <>
+              <NavLink
+                className="nav-link"
+                style={{ color: "purple" }}
+                to="/record"
+              >
+                Quiz History
+              </NavLink>
+              <button
+                className="nav-link"
+                style={{ color: "purple" }}
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <NavLink
               className="nav-link"
@@ -40,10 +49,13 @@ function Learning({ isLoggedIn, handleLogout }) {
         </div>
       </nav>
       <div className="container mt-5">
-        <h2 className="text-center mt-5">Civics Questions and Answers (2008 version)</h2>
+        <h2 className="text-center mt-5">
+          Civics Questions and Answers (2008 version)
+        </h2>
         <p>
-        Although USCIS is aware that there may be additional correct answers to the 100 civics questions, applicants are 
-encouraged to respond to the civics questions using the answers provided below.
+          Although USCIS is aware that there may be additional correct answers
+          to the 100 civics questions, applicants are encouraged to respond to
+          the civics questions using the answers provided below.
         </p>
         <p>
           * If you are 65 years old or older and have been a legal permanent
