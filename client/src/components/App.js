@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Home from "./Home";
 import Learning from "./Learning";
@@ -43,6 +43,7 @@ function App() {
       if (r.status === 204) {
         setIsLoggedIn(false);
         setUser(null);
+        setUserId(null)
       } else {
         console.error("Logout error:", r.statusText);
       }
@@ -66,6 +67,7 @@ function App() {
               onLogin={(user) => setUser(user)}
               setIsLoggedIn={setIsLoggedIn}
               setErrors={setErrors}
+              setUserId={setUserId}
             />
           }
         />

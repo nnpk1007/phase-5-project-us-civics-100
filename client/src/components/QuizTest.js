@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function QuizTest({ userId }) {
   const [quiz, setQuiz] = useState([]);
@@ -32,7 +33,7 @@ function QuizTest({ userId }) {
     if (currentQuestionsIndex < quiz.length) {
       setCurrentQuestionIndex(currentQuestionsIndex + 1);
     }
-    
+
     if (currentQuestionsIndex === quiz.length - 1) {
       console.log("User ID:", userId);
       console.log("Score:", score);
@@ -115,6 +116,7 @@ function QuizTest({ userId }) {
                   <h2 className="text-danger">Try again next time</h2>
                 </div>
               )}
+              <Link to="/learning">Go back to learning page</Link>
             </div>
           )}
         </div>
