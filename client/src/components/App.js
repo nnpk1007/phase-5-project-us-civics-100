@@ -74,7 +74,7 @@ function App() {
           element={<Signup setIsLoggedIn={setIsLoggedIn} />}
         />
         {isLoggedIn ? (
-          <Route path="/test" element={<QuizTest />} />
+          <Route path="/test" element={<QuizTest userId={userId }/>} />
         ) : (
           <Route path="/test" element={<Navigate to="/login" />} />
         )}

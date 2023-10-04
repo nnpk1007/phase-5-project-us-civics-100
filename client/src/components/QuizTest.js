@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-function QuizTest() {
+function QuizTest({ userId }) {
   const [quiz, setQuiz] = useState([]);
   const [currentQuestionsIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
@@ -14,9 +14,6 @@ function QuizTest() {
         setQuiz(data);
       });
   }, []);
-
-  console.log("Length:", quiz.length);
-  console.log("Current question index:", currentQuestionsIndex)
 
   const handleAnswerSelect = (answerIndex) => {
     setSelectedAnswerIndex(answerIndex);
@@ -34,9 +31,34 @@ function QuizTest() {
     // check to make sure the currenQuestionIndex does not go over the limit
     if (currentQuestionsIndex < quiz.length) {
       setCurrentQuestionIndex(currentQuestionsIndex + 1);
-    } 
+    }
+    
+    if (currentQuestionsIndex === quiz.length - 1) {
+      console.log("User ID:", userId);
+      console.log("Score:", score);
+      console.log("Length:", quiz.length);
+      console.log("Current question index:", currentQuestionsIndex);
+      submitQuizAttempt(userId, score, quiz.length);
+    }
   };
-  console.log("Score:", score);
+
+  function submitQuizAttempt(userId, score, quizAttempted) {
+    fetch("/submit-quiz-attempt", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: userId,
+        score: score,
+        questions_attempted: quizAttempted,
+      }),
+    }).then((r) => {
+      if (r.ok) {
+        console.log("Quiz attempt has been submitted");
+      } else {
+        console.log("Quiz attenpt submission failed");
+      }
+    });
+  }
 
   return (
     <>
@@ -79,7 +101,9 @@ function QuizTest() {
           ) : (
             <div className="text-center">
               <h3 className="text-info">Quiz Completed</h3>
-              <p className="score fs-4 fw-bold text-secondary">Score: {score}</p>
+              <p className="score fs-4 fw-bold text-secondary">
+                Score: {score}
+              </p>
               {score > 5 ? (
                 <div className="text-center">
                   <h2 className="text-success">
