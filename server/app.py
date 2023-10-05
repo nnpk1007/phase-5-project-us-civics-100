@@ -47,6 +47,8 @@ class Signup(Resource):
 
             session["user_id"] = new_user.id
 
+            print("New User from Signup:", new_user)
+
             return new_user.to_dict(), 201
 
         except IntegrityError as e:
@@ -61,6 +63,7 @@ class Signup(Resource):
                         )
 
             return {"errors": errors}, 422
+        
 
 
 api.add_resource(Signup, "/signup", endpoint="signup")
