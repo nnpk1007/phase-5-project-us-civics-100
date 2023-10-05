@@ -40,7 +40,7 @@ if __name__ == '__main__':
             Question(question_text="What do we call the first ten amendments to the Constitution?"),
             Question(question_text="What is one right or freedom from the First Amendment?*"),
             Question(question_text="How many amendments does the Constitution have?"),
-            Question(question_text="How many amendments does the Constitution have?"),
+            Question(question_text="What did the Declaration of Independence do?"),
             Question(question_text="What are two rights in the Declaration of Independence?"),
             Question(question_text="What is freedom of religion?"),
             Question(question_text="What is the economic system in the United States?*"),
