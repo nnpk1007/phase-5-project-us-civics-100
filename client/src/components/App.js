@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 
-import Home from "./Home";
+import LandingPage from "./LandingPage";
 import Learning from "./Learning";
 import Login from "./Login";
 import Signup from "./Signup";
 import QuizTest from "./QuizTest";
+import QuizHistory from "./QuizHistory";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import QuizHistory from "./QuizHistory";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -59,7 +59,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<LandingPage />} />
         <Route
           path="/learning"
           element={

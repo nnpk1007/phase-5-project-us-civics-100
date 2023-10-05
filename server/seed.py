@@ -11,7 +11,6 @@ from app import app
 from models import db, User, Question, Answer, QuizAttempt
 
 if __name__ == '__main__':
-    #fake = Faker()
     with app.app_context():
         print("Deleting all records...")
         User.query.delete()
@@ -196,8 +195,8 @@ if __name__ == '__main__':
             Answer(answer_text="Two (2)", correct=True, question=questions_to_add[21]),
             Answer(answer_text="Four (4)", correct=False, question=questions_to_add[21]),
             Answer(answer_text="Answers will vary. [Residents of territories with nonvoting Delegates or Resident Commissioners may provide the name of that Delegate or Commissioner. Also acceptable is any statement that the territory has no (voting) Representatives in Congress.]", correct=True, question=questions_to_add[22]),
-            Answer(anwswer_text="All people of the state", correct=True, question=question_to_add[23]),
-            Answer(anwswer_text="All people of the country", correct=False, question=question_to_add[23]),
+            Answer(answer_text="All people of the state", correct=True, question=questions_to_add[23]),
+            Answer(answer_text="All people of the country", correct=False, question=questions_to_add[23]),
             Answer(answer_text="Because of the state’s population", correct=True, question=questions_to_add[24]),
             Answer(answer_text="Because of the goverment", correct=False, question=questions_to_add[24]),
             Answer(answer_text="Four (4)", correct=True, question=questions_to_add[25]),

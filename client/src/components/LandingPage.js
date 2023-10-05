@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 
 
-function Home() {
+function LandingPage() {
     return (
         <div className="text-center mt-5">
             <h1>US Civics 100 Exam Prep</h1>
@@ -16,4 +16,4 @@ function Home() {
     )
 }
 
-export default Home
+export default LandingPage
