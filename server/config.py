@@ -1,4 +1,8 @@
-# Standard library imports
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 # Remote library imports
 from flask import Flask
@@ -9,12 +13,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from sqlalchemy import MetaData
 
-# Local imports
 
 # Instantiate app, set attributes
 app = Flask(__name__)
 
+app.secret_key = os.getenv('SECRET_KEY')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.json.compact = False
 

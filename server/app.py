@@ -1,8 +1,4 @@
 #!/usr/bin/env python3
-from dotenv import load_dotenv
-
-load_dotenv()
-
 import random
 
 from flask import request, session, jsonify
@@ -222,4 +218,5 @@ def get_quiz_attempts(user_id):
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
+    
 
