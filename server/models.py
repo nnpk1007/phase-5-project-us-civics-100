@@ -1,5 +1,4 @@
 from sqlalchemy_serializer import SerializerMixin
-from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
 from sqlalchemy.orm import validates
@@ -7,10 +6,12 @@ from sqlalchemy.orm import validates
 from config import db, bcrypt
 
 # Define the association table for the many-to-many relationship
-user_question =  db.Table(
+user_question = db.Table(
     "user_questions",
     db.Column("user_id", db.Integer, db.ForeignKey("users.id", primary_key=True)),
-    db.Column("question_id", db.Integer, db.ForeignKey("questions.id", primary_key=True))
+    db.Column(
+        "question_id", db.Integer, db.ForeignKey("questions.id", primary_key=True)
+    ),
 )
 
 
@@ -24,7 +25,9 @@ class User(db.Model, SerializerMixin):
     _password_hash = db.Column(db.String)
 
     # many-to-many relationship with Question
-    questions_attempted = db.relationship("Question", secondary=user_question, back_populates="users_attempted")
+    questions_attempted = db.relationship(
+        "Question", secondary=user_question, back_populates="users_attempted"
+    )
 
     @hybrid_property
     def password_hash(self):
@@ -40,12 +43,18 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, provided_password):
         return bcrypt.check_password_hash(self._password_hash, provided_password)
-    
-    @validates('email')
+
+    @validates("email")
     def validate_email(self, key, address):
-        if '@' not in address:
+        if "@" not in address:
             raise ValueError("Invalid email address")
         return address
+
+    @validates("password")
+    def validate_password(self, key, password):
+        if len(password) < 5:
+            raise ValueError("Password must be at least 6 characters")
+        return password
 
     def __repr__(self):
         return f"User \
@@ -63,7 +72,9 @@ class Question(db.Model, SerializerMixin):
     question_text = db.Column(db.String)
 
     # many-to-many relationship with User
-    users_attempted = db.relationship("User", secondary=user_question, back_populates="questions_attempted")
+    users_attempted = db.relationship(
+        "User", secondary=user_question, back_populates="questions_attempted"
+    )
 
     # one-to-many relationship with Answer
     answers = db.relationship("Answer", backref="question")
@@ -71,7 +82,7 @@ class Question(db.Model, SerializerMixin):
     def __repr__(self):
         return f"Question \
             id: {self.id} \
-            question_text: {self.question_text} "  
+            question_text: {self.question_text} "
 
 
 # Answer Model
