@@ -79,12 +79,12 @@ function App() {
         />
         <Route
           path="/signup"
-          element={<Signup setIsLoggedIn={setIsLoggedIn} />}
+          element={<Signup setIsLoggedIn={setIsLoggedIn} fetchUser={fetchUser} onLogin={onLogin} />}
         />
         {isLoggedIn ? (
-          <Route path="/test" element={<QuizTest user={user}/>} />
+          <Route path="/test" element={<QuizTest user={user} userId={userId} fetchUser={fetchUser}/>} />
         ) : (
-          <Route path="/login" element={<Navigate to="/login" />} />
+          <Route path="/test" element={<Navigate to="/login" />} />
         )}
         <Route path="/quiz-history" element={<QuizHistory userId={userId}/>}/>
       </Routes>

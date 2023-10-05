@@ -23,7 +23,7 @@ function Login({ onLogin, setIsLoggedIn, setUserId }) {
             onLogin(user);
             setIsLoggedIn(true);
             setUserId(user.id);
-            navigate("/test");
+            navigate("/learning");
           });
         } else {
           r.json().then((errorData) => {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Signup({ setIsLoggedIn }) {
+function Signup({ setIsLoggedIn, fetchUser }) {
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -32,6 +32,7 @@ function Signup({ setIsLoggedIn }) {
           setPassword("")
           setPasswordConfirmation("")
           setIsLoggedIn(true)
+          fetchUser(newUser)
           navigate("/learning");
         })
       } else {

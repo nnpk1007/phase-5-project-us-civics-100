@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function QuizTest({ user }) {
+function QuizTest({ user, fetchUser, userId }) {
   const [quiz, setQuiz] = useState([]);
   const [currentQuestionsIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
@@ -34,19 +34,26 @@ function QuizTest({ user }) {
       selectedAnswerIndex !== null &&
       currentQuestion.answer_options[selectedAnswerIndex].correct
     ) {
-      setScore(score + 1);
+      // Use the functional form of setScore to update it based on the previous value
+      setScore((prevScore) => {
+        return prevScore + 1;
+      });
     }
+    console.log("Update score:", score);
     // check to make sure the currenQuestionIndex does not go over the limit
     if (currentQuestionsIndex < quiz.length) {
       setCurrentQuestionIndex(currentQuestionsIndex + 1);
     }
 
     if (currentQuestionsIndex === quiz.length - 1) {
-      console.log("User ID:", user);
+      console.log("User ID:", userId);
       console.log("Score:", score);
       console.log("Length:", quiz.length);
       console.log("Current question index:", currentQuestionsIndex);
-      submitQuizAttempt(user, score, quiz.length);
+      // due to the asynchronous of state updates in React, the score state using setScore
+      // might not have been updated immediately.
+      // using score + 1 in submitQuizAttempt to ensure that the correct score is submitted
+      submitQuizAttempt(userId, score + 1, quiz.length);
     }
   };
 
@@ -132,7 +139,12 @@ function QuizTest({ user }) {
                   <h2 className="text-danger">Try again next time</h2>
                 </div>
               )}
-              <Link to="/learning">Go back to learning page</Link>
+              <p className="mt-3 text-center">
+                <Link to="/quiz-history">Your Quiz Attempted History</Link>
+              </p>
+              <p className="mt-3 text-center">
+                <Link to="/learning">Go back to learning page</Link>
+              </p>
             </div>
           )}
         </div>
