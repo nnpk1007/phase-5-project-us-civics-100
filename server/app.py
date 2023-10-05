@@ -30,13 +30,16 @@ class Signup(Resource):
         if password != password_confirmation:
             errors.append("Password confirmation failed")
 
+        try:
+            new_user = User(username=username, email=email)
+            new_user.password_hash = password 
+            new_user.validate_email(key="email", address=email )
+        except ValueError as e:
+            errors.append(str(e))
+
         if errors:
             return {"errors": errors}, 422
-
-        # Save a new user to databse 
-        new_user = User(username=username, email=email)
-        new_user.password_hash = password 
-
+        
         try:
             db.session.add(new_user)
             db.session.commit()

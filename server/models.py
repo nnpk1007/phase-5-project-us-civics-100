@@ -2,6 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy.ext.hybrid import hybrid_property
 from datetime import datetime
+from sqlalchemy.orm import validates
 
 from config import db, bcrypt
 
@@ -39,6 +40,12 @@ class User(db.Model, SerializerMixin):
 
     def authenticate(self, provided_password):
         return bcrypt.check_password_hash(self._password_hash, provided_password)
+    
+    @validates('email')
+    def validate_email(self, key, address):
+        if '@' not in address:
+            raise ValueError("Invalid email address")
+        return address
 
     def __repr__(self):
         return f"User \
