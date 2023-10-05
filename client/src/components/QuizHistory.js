@@ -2,18 +2,20 @@ import { useState, useEffect } from "react";
 
 function QuizHistory({ userId }) {
   const [quizAttempts, setQuizAttempts] = useState([]);
-  console.log(userId);
+  console.log("User id first load:",userId);
 
   useEffect(() => {
+    const fetchQuizAttempts = () => {
+      if (userId) {
+        fetch(`/quiz-attempts/${userId}`)
+          .then((r) => r.json())
+          .then((data) => setQuizAttempts(data))
+      }
+    };
+    
     fetchQuizAttempts();
-  }, []);
-
-  const fetchQuizAttempts = () => {
-    fetch(`/quiz-attempts/${userId}`)
-      .then((r) => r.json())
-      .then((data) => setQuizAttempts(data));
-  };
-
+  }, [userId]);
+    
   return (
     <>
       <div className="container mt-4">
@@ -35,7 +37,9 @@ function QuizHistory({ userId }) {
                     {quizAttempts.map((attempt) => (
                       <tr key={attempt.id}>
                         <td>{attempt.score}</td>
-                        <td>{new Date(attempt.quiz_date).toLocaleString()}</td>
+                        <td>
+                          {new Date(attempt.quiz_date).toLocaleString()} {/* https://www.w3schools.com/jsref/jsref_tolocalestring.asp */}
+                        </td>{" "}
                       </tr>
                     ))}
                   </tbody>

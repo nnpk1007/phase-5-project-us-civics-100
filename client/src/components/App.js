@@ -25,8 +25,8 @@ function App() {
       if (r.ok) {
         console.log("Fetch User", r);
         r.json().then((userData) => {
-          setUser(userData);
           setUserId(userData.id);
+          setUser(userData);
           setIsLoggedIn(true);
         });
       } else {
