@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function QuizHistory({ userId }) {
   const [quizAttempts, setQuizAttempts] = useState([]);
-  console.log("User id first load:",userId);
+  console.log("User id first load:", userId);
 
   useEffect(() => {
     const fetchQuizAttempts = () => {
       if (userId) {
         fetch(`/quiz-attempts/${userId}`)
           .then((r) => r.json())
-          .then((data) => setQuizAttempts(data))
+          .then((data) => setQuizAttempts(data));
       }
     };
-    
+
     fetchQuizAttempts();
   }, [userId]);
-    
+
   return (
     <>
       <div className="container mt-4">
@@ -38,7 +39,8 @@ function QuizHistory({ userId }) {
                       <tr key={attempt.id}>
                         <td>{attempt.score}</td>
                         <td>
-                          {new Date(attempt.quiz_date).toLocaleString()} {/* https://www.w3schools.com/jsref/jsref_tolocalestring.asp */}
+                          {new Date(attempt.quiz_date).toLocaleString()}{" "}
+                          {/* https://www.w3schools.com/jsref/jsref_tolocalestring.asp */}
                         </td>{" "}
                       </tr>
                     ))}
@@ -46,6 +48,9 @@ function QuizHistory({ userId }) {
                 </table>
               </div>
             </div>
+            <p className="mt-3 text-center">
+              <Link to="/learning">Go back to learning page</Link>
+            </p>
           </div>
         </div>
       </div>

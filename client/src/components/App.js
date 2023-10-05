@@ -32,11 +32,15 @@ function App() {
       } else {
         r.json().then((errorData) => {
           setErrors([errorData.errors]);
+          console.log(errors)
         });
       }
     });
   };
+  
+  const onLogin=(user) => setUser(user)
 
+ 
   const handleLogout = () => {
     fetch("/logout", {
       method: "DELETE",
@@ -50,6 +54,7 @@ function App() {
       }
     });
   };
+
 
   return (
     <BrowserRouter>
@@ -65,7 +70,7 @@ function App() {
           path="/login"
           element={
             <Login
-              onLogin={(user) => setUser(user)}
+              onLogin={onLogin}
               setIsLoggedIn={setIsLoggedIn}
               setErrors={setErrors}
               setUserId={setUserId}
@@ -77,9 +82,9 @@ function App() {
           element={<Signup setIsLoggedIn={setIsLoggedIn} />}
         />
         {isLoggedIn ? (
-          <Route path="/test" element={<QuizTest userId={userId }/>} />
+          <Route path="/test" element={<QuizTest user={user}/>} />
         ) : (
-          <Route path="/test" element={<Navigate to="/login" />} />
+          <Route path="/login" element={<Navigate to="/login" />} />
         )}
         <Route path="/quiz-history" element={<QuizHistory userId={userId}/>}/>
       </Routes>

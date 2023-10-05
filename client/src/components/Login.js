@@ -12,7 +12,7 @@ function Login({ onLogin, setIsLoggedIn, setUserId }) {
     e.preventDefault();
     fetch("/login", {
       method: "POST",
-      headers: { 
+      headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
@@ -22,8 +22,8 @@ function Login({ onLogin, setIsLoggedIn, setUserId }) {
           r.json().then((user) => {
             onLogin(user);
             setIsLoggedIn(true);
-            setUserId(user.id)
-            navigate("/learning");
+            setUserId(user.id);
+            navigate("/test");
           });
         } else {
           r.json().then((errorData) => {
@@ -37,6 +37,7 @@ function Login({ onLogin, setIsLoggedIn, setUserId }) {
       });
   }
 
+  
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
@@ -90,6 +91,9 @@ function Login({ onLogin, setIsLoggedIn, setUserId }) {
           </div>
           <p className="mt-3 text-center">
             Don't have an account? <Link to="/signup">Sign up</Link>
+          </p>
+          <p className="mt-3 text-center">
+            <Link to="/learning">Go back to learning page</Link>
           </p>
         </div>
       </div>
