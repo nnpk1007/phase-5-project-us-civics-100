@@ -14,25 +14,25 @@ function Learning({ isLoggedIn, handleLogout }) {
   return (
     <>
       <nav className="navbar navbar-expand-lg fixed-top navbar-dark" style={{ backgroundColor: "#e3f2fd"}}>
-        <h3 className="ms-3">
+        <h3 className="ms-3" style={{ color: "#BF2EF4" }}>
           100 Civics Questions and Answers (2008 version)
         </h3>
         <div className="navbar-nav ms-auto">
-          <NavLink className="nav-link ms-auto" style={{ color: "purple" }} to="/test">
+          <NavLink className="nav-link ms-auto" style={{ color: "#EC1CC6" }} to="/test">
             QuizTest
           </NavLink>
           {isLoggedIn ? (
             <>
               <NavLink
                 className="nav-link ms-auto"
-                style={{ color: "purple" }}
+                style={{ color: "#EC1CC6" }}
                 to="/quiz-history"
               >
                 Quiz History
               </NavLink>
               <button
                 className="nav-link ms-auto"
-                style={{ color: "purple" }}
+                style={{ color: "#EC1CC6" }}
                 onClick={() => {
                   handleLogout();
                 }}
@@ -43,7 +43,7 @@ function Learning({ isLoggedIn, handleLogout }) {
           ) : (
             <NavLink
               className="nav-link"
-              style={{ color: "purple" }}
+              style={{ color: "#EC1CC6" }}
               to="/login"
             >
               Login
@@ -52,12 +52,12 @@ function Learning({ isLoggedIn, handleLogout }) {
         </div>
       </nav>
       <div className="container mt-5" style={{paddingTop: "150px"}}>
-        <p className="fst-italic fw-lighter">
+        <p className="fst-italic fw-lighter" style={{color: "#70067D"}}>
           Although USCIS is aware that there may be additional correct answers
           to the 100 civics questions, applicants are encouraged to respond to
           the civics questions using the answers provided below.
         </p>
-        <p className="fst-italic fw-lighter">
+        <p className="fst-italic fw-lighter" style={{color: "#70067D"}}>
           * If you are 65 years old or older and have been a legal permanent
           resident of the United States for 20 or more years, you may study just
           the questions that have been marked with an asterisk
