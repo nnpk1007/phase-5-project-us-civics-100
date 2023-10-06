@@ -52,8 +52,6 @@ class Signup(Resource):
             return new_user.to_dict(), 201
 
         except IntegrityError as e:
-            errors = []
-
             # Check if the error is an IntegrityError or DataError
             if isinstance(e, (IntegrityError)):
                 for error in e.orig.args:
