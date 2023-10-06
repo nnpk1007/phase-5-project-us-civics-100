@@ -13,7 +13,10 @@ function Learning({ isLoggedIn, handleLogout }) {
 
   return (
     <>
-      <nav className="navbar navbar-expand fixed-top navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg fixed-top navbar-dark" style={{ backgroundColor: "#e3f2fd"}}>
+        <h3 className="ms-3">
+          100 Civics Questions and Answers (2008 version)
+        </h3>
         <div className="navbar-nav ms-auto">
           <NavLink className="nav-link" style={{ color: "purple" }} to="/test">
             QuizTest
@@ -48,14 +51,11 @@ function Learning({ isLoggedIn, handleLogout }) {
           )}
         </div>
       </nav>
-      <div className="container mt-5">
-        <h2 className="text-center mt-5">
-          Civics Questions and Answers (2008 version)
-        </h2>
+      <div className="container mt-5" style={{paddingTop: "60px"}}>
         <p className="fst-italic fw-lighter">
-            Although USCIS is aware that there may be additional correct answers
-            to the 100 civics questions, applicants are encouraged to respond to
-            the civics questions using the answers provided below.
+          Although USCIS is aware that there may be additional correct answers
+          to the 100 civics questions, applicants are encouraged to respond to
+          the civics questions using the answers provided below.
         </p>
         <p className="fst-italic fw-lighter">
           * If you are 65 years old or older and have been a legal permanent
