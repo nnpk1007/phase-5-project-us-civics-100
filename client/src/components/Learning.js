@@ -52,12 +52,12 @@ function Learning({ isLoggedIn, handleLogout }) {
         <h2 className="text-center mt-5">
           Civics Questions and Answers (2008 version)
         </h2>
-        <p>
-          Although USCIS is aware that there may be additional correct answers
-          to the 100 civics questions, applicants are encouraged to respond to
-          the civics questions using the answers provided below.
+        <p className="fst-italic fw-lighter">
+            Although USCIS is aware that there may be additional correct answers
+            to the 100 civics questions, applicants are encouraged to respond to
+            the civics questions using the answers provided below.
         </p>
-        <p>
+        <p className="fst-italic fw-lighter">
           * If you are 65 years old or older and have been a legal permanent
           resident of the United States for 20 or more years, you may study just
           the questions that have been marked with an asterisk
