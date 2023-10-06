@@ -18,20 +18,20 @@ function Learning({ isLoggedIn, handleLogout }) {
           100 Civics Questions and Answers (2008 version)
         </h3>
         <div className="navbar-nav ms-auto">
-          <NavLink className="nav-link" style={{ color: "purple" }} to="/test">
+          <NavLink className="nav-link ms-auto" style={{ color: "purple" }} to="/test">
             QuizTest
           </NavLink>
           {isLoggedIn ? (
             <>
               <NavLink
-                className="nav-link"
+                className="nav-link ms-auto"
                 style={{ color: "purple" }}
                 to="/quiz-history"
               >
                 Quiz History
               </NavLink>
               <button
-                className="nav-link"
+                className="nav-link ms-auto"
                 style={{ color: "purple" }}
                 onClick={() => {
                   handleLogout();
@@ -51,7 +51,7 @@ function Learning({ isLoggedIn, handleLogout }) {
           )}
         </div>
       </nav>
-      <div className="container mt-5" style={{paddingTop: "60px"}}>
+      <div className="container mt-5" style={{paddingTop: "150px"}}>
         <p className="fst-italic fw-lighter">
           Although USCIS is aware that there may be additional correct answers
           to the 100 civics questions, applicants are encouraged to respond to
