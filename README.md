@@ -2,9 +2,21 @@
 
 ## Overview
 
-The US Civics 100 Web App is an educational tool designed to help individuals prepare for the US citizenship exam. This web app provides access to the 100 civics questions and answers required for the exam, along with additional features to enhance the learning experience.
+The US Civics 100 Web App is an educational tool designed to help individuals prepare for the US citizenship exam. 
+
+This web app provides access to the 100 civics questions and answers required for the exam, along with additional features to enhance the learning experience.
 
 ![](/us-civics-readme.png)
+
+My web app has been deployed on render.com using free web service.
+
+You can access my web app at: [https://us-civics-100.onrender.com/](https://us-civics-100.onrender.com/) 
+
+Note from render.com: 
+
+Render spins down a Free web service that goes 15 minutes without receiving inbound traffic. Render spins the service back up whenever it next receives a request to process.
+
+Spinning up a service takes a few seconds, which causes a noticeable delay for incoming requests until the service is back up and running. For example, a browser page load will hang momentarily
 
 ---
 
