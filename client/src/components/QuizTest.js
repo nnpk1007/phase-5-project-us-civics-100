@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-function QuizTest({ user, fetchUser, userId }) {
+function QuizTest({ user, userId }) {
   const [quiz, setQuiz] = useState([]);
   const [currentQuestionsIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
   const [score, setScore] = useState(0);
+  
 
   useEffect(() => {
     console.log("User state in QuizTest:", user);
@@ -26,6 +27,9 @@ function QuizTest({ user, fetchUser, userId }) {
   const handleAnswerSelect = (answerIndex) => {
     setSelectedAnswerIndex(answerIndex);
   };
+  
+  console.log("Quiz.lenght:", quiz.length)
+  console.log("Current Question Index:", currentQuestionsIndex)
 
   const handleNextQuestion = () => {
     // Check if the selected answer is correct and update the score.
@@ -35,27 +39,29 @@ function QuizTest({ user, fetchUser, userId }) {
       currentQuestion.answer_options[selectedAnswerIndex].correct
     ) {
       // Use the functional form of setScore to update it based on the previous value
-      setScore((prevScore) => {
-        return prevScore + 1;
-      });
+      console.log("Before update score:", score)
+      setScore((prevScore) => prevScore + 1);
+      console.log("After update score:", score);
     }
-    console.log("Update score:", score);
     // check to make sure the currenQuestionIndex does not go over the limit
     if (currentQuestionsIndex < quiz.length) {
       setCurrentQuestionIndex(currentQuestionsIndex + 1);
     }
-
+    
     if (currentQuestionsIndex === quiz.length - 1) {
       console.log("User ID:", userId);
       console.log("Score:", score);
       console.log("Length:", quiz.length);
-      console.log("Current question index:", currentQuestionsIndex);
+      console.log("Current question index in the If:", currentQuestionsIndex);
       // due to the asynchronous of state updates in React, the score state using setScore
       // might not have been updated immediately.
-      // using score + 1 in submitQuizAttempt to ensure that the correct score is submitted
-      submitQuizAttempt(userId, score + 1, quiz.length);
+      // using score + 1 in submitQuizAttempt to ensure that the correct score is submitted (it showed incorrect score when deploy)
+      // back to using score only, not + 1
+      
+      return submitQuizAttempt(userId, score, quiz.length);
     }
   };
+
 
   function submitQuizAttempt(userId, score, quizAttempted) {
     fetch("/submit-quiz-attempt", {

@@ -82,7 +82,7 @@ function App() {
           element={<Signup setIsLoggedIn={setIsLoggedIn} fetchUser={fetchUser} onLogin={onLogin} />}
         />
         {isLoggedIn ? (
-          <Route path="/test" element={<QuizTest user={user} userId={userId} fetchUser={fetchUser}/>} />
+          <Route path="/test" element={<QuizTest user={user} userId={userId} />} />
         ) : (
           <Route path="/test" element={<Navigate to="/login" />} />
         )}

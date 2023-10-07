@@ -14,25 +14,25 @@ function Learning({ isLoggedIn, handleLogout }) {
   return (
     <>
       <nav className="navbar navbar-expand-lg fixed-top navbar-dark" style={{ backgroundColor: "#e3f2fd"}}>
-        <h3 className="ms-3" style={{ color: "#BF2EF4" }}>
+        <h2 className="ms-3" style={{ color: "#441C3E" }}>
           100 Civics Questions and Answers (2008 version)
-        </h3>
+        </h2>
         <div className="navbar-nav ms-auto">
-          <NavLink className="nav-link ms-auto" style={{ color: "#EC1CC6" }} to="/test">
+          <NavLink className="nav-link ms-auto" style={{ color: "#1B1824" }} to="/test">
             QuizTest
           </NavLink>
           {isLoggedIn ? (
             <>
               <NavLink
                 className="nav-link ms-auto"
-                style={{ color: "#EC1CC6" }}
+                style={{ color: "#1B1824" }}
                 to="/quiz-history"
               >
                 Quiz History
               </NavLink>
               <button
                 className="nav-link ms-auto"
-                style={{ color: "#EC1CC6" }}
+                style={{ color: "#1B1824" }}
                 onClick={() => {
                   handleLogout();
                 }}
@@ -43,7 +43,7 @@ function Learning({ isLoggedIn, handleLogout }) {
           ) : (
             <NavLink
               className="nav-link"
-              style={{ color: "#EC1CC6" }}
+              style={{ color: "#1B1824" }}
               to="/login"
             >
               Login
@@ -64,15 +64,15 @@ function Learning({ isLoggedIn, handleLogout }) {
         </p>
 
         {questions.map((question, index) => (
-          <div key={question.id}>
-            <p>
+          <div key={question.id} >
+            <p style={{color: "#48033D"}}>
               <strong>
                 Question {index + 1}: {question.question_text}
               </strong>
-            </p>
+            </p >
 
             {question.answers.map((answer) => (
-              <p key={answer}>. {answer}</p>
+              <p key={answer} style={{color: "#48033D"}}>. {answer}</p>
             ))}
           </div>
         ))}
