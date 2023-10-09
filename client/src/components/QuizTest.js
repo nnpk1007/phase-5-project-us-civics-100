@@ -27,7 +27,6 @@ function QuizTest({ user, userId }) {
     setSelectedAnswerIndex(answerIndex);
   };
 
-  console.log("Quiz.lenght:", quiz.length);
   console.log("Current Question Index:", currentQuestionsIndex);
 
   const handleNextQuestion = () => {
@@ -38,11 +37,12 @@ function QuizTest({ user, userId }) {
       return;
     }
     // Check if the selected answer is correct and update the score.
+    let newScore = 0
+
     if (currentQuestion.answer_options[selectedAnswerIndex].correct) {
-      // Use the functional form of setScore to update it based on the previous value
-      console.log("Before update score:", score);
-      setScore((prevScore) => prevScore + 1);
-      console.log("After update score:", score);
+      newScore = score + 1
+      console.log("New score:", newScore)
+      setScore(newScore)
     }
     // check to make sure the currenQuestionIndex does not go over the limit
     if (currentQuestionsIndex < quiz.length) {
@@ -50,16 +50,11 @@ function QuizTest({ user, userId }) {
     }
 
     if (currentQuestionsIndex === quiz.length - 1) {
-      console.log("User ID:", userId);
-      console.log("Score:", score);
       console.log("Length:", quiz.length);
       console.log("Current question index in the If:", currentQuestionsIndex);
-      // due to the asynchronous of state updates in React, the score state using setScore
-      // might not have been updated immediately.
-      // using score + 1 in submitQuizAttempt to ensure that the correct score is submitted (it showed incorrect score when deploy)
-      // back to using score only, not + 1
-
-      return submitQuizAttempt(userId, score, quiz.length);
+      console.log("New Score which is used to submitQuizAttempt:", newScore);
+      
+      submitQuizAttempt(userId, newScore, quiz.length)
     }
   };
 
@@ -112,13 +107,13 @@ function QuizTest({ user, userId }) {
                     </div>
                   )
                 )}
-                <button
-                  type="button"
-                  className="btn btn-success mt-3"
-                  onClick={handleNextQuestion}
-                >
-                  Next
-                </button>
+                  <button
+                    type="button"
+                    className="btn btn-success mt-3"
+                    onClick={handleNextQuestion}
+                  >
+                    Next
+                  </button>
               </div>
               <div>
                 <p className="mt-3 text-center">
