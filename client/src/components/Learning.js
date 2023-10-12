@@ -14,7 +14,7 @@ function Learning({ isLoggedIn, handleLogout }) {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg fixed-top navbar-dark" style={{ backgroundColor: "#e3f2fd"}}>
+      <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-light">
         <h2 className="ms-3" style={{ color: "#441C3E" }}>
           100 Civics Questions and Answers (2008 version)
         </h2>
@@ -52,7 +52,7 @@ function Learning({ isLoggedIn, handleLogout }) {
           )}
         </div>
       </nav>
-      <div className="container mt-5" style={{paddingTop: "150px"}}>
+      <div className="container mt-5" style={{paddingTop: "100px"}}>
         <p className="fst-italic fw-lighter" style={{color: "#70067D"}}>
           Although USCIS is aware that there may be additional correct answers
           to the 100 civics questions, applicants are encouraged to respond to

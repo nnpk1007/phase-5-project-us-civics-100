@@ -1,7 +1,12 @@
-body {
+.landing-page {
   background-image: url("../image/landing-page/landing.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-attachment: fixed; 
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
