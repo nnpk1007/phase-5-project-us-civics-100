@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
 
 function Learning({ isLoggedIn, handleLogout }) {
   const [questions, setQuestions] = useState([]);
@@ -18,8 +19,8 @@ function Learning({ isLoggedIn, handleLogout }) {
           100 Civics Questions and Answers (2008 version)
         </h2>
         <div className="navbar-nav ms-auto">
-          <NavLink className="nav-link ms-auto" style={{ color: "#1B1824" }} to="/test">
-            QuizTest
+          <NavLink className="nav-link ms-auto " style={{ color: "#1B1824" }} to="/test">
+            <Button variant="outline-primary">QuizTest</Button>
           </NavLink>
           {isLoggedIn ? (
             <>
@@ -28,17 +29,17 @@ function Learning({ isLoggedIn, handleLogout }) {
                 style={{ color: "#1B1824" }}
                 to="/quiz-history"
               >
-                Quiz History
+                <Button variant="outline-primary">Quiz History</Button>
               </NavLink>
-              <button
+              <NavLink
                 className="nav-link ms-auto"
-                style={{ color: "#1B1824" }}
+                // style={{ color: "#1B1824" }}
                 onClick={() => {
                   handleLogout();
                 }}
               >
-                Logout
-              </button>
+                <Button variant="outline-primary">Logout</Button>
+              </NavLink>
             </>
           ) : (
             <NavLink
@@ -46,7 +47,7 @@ function Learning({ isLoggedIn, handleLogout }) {
               style={{ color: "#1B1824" }}
               to="/login"
             >
-              Login
+              <Button variant="outline-primary">Login</Button>
             </NavLink>
           )}
         </div>
